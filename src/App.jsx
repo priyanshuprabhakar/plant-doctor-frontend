@@ -26,7 +26,6 @@ import {
 } from 'firebase/firestore';
 
 // --- FIREBASE CONFIGURATION ---
-// TODO: PASTE YOUR FIREBASE CONFIG HERE IF YOU HAVEN'T ALREADY
 const firebaseConfig = {
   apiKey: "AIzaSyBajMfw6j3D_rsXEv7Om24Ho11BP83VjXc",
   authDomain: "plant-doctor-fe172.firebaseapp.com",
@@ -44,11 +43,11 @@ const db = isConfigured ? getFirestore(app) : null;
 const appId = 'plant-doctor'; 
 
 export default function PlantDiseaseUI() {
-  // --- STATE ---
+  
   const [user, setUser] = useState(null);
   const [currentTab, setCurrentTab] = useState('landing'); // 'landing', 'auth', 'home', 'scanner', 'history', 'info'
   
-  // Auth State
+  
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -67,12 +66,12 @@ export default function PlantDiseaseUI() {
   const [error, setError] = useState(null);
   const [serverStatus, setServerStatus] = useState('checking'); 
   const fileInputRef = useRef(null);
+  const [selectedPlant, setSelectedPlant] = useState('auto');//new state for plant selection (auto, tomato, potato, etc.)
 
   // History State
   const [historyItems, setHistoryItems] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
 
-  // --- EFFECTS ---
 
   // 1. Auth Listener
   useEffect(() => {
@@ -154,7 +153,6 @@ export default function PlantDiseaseUI() {
                 });
             } catch (profileErr) {
                 console.error("Error saving profile:", profileErr);
-                // We don't block the login if profile save fails, but good to know
             }
         }
       } else {
@@ -225,6 +223,7 @@ export default function PlantDiseaseUI() {
     setError(null);
     const formData = new FormData();
     formData.append("file", selectedFile);
+    formData.append("plant_type", selectedPlant);//new field for plant type selection
 
     try {
       const response = await fetch("https://plant-doctor-backend.onrender.com/predict", {
@@ -684,6 +683,23 @@ export default function PlantDiseaseUI() {
           <div className="max-w-3xl mx-auto space-y-6">
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                 <div className="p-8">
+                  {/* ---> NEW PLANT SELECTOR DROPDOWN <--- */}
+                <div className="mb-6">
+                    <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-2">
+                        <Sprout className="w-4 h-4 text-green-600" />
+                        Select Crop Type
+                    </label>
+                    <select 
+                        value={selectedPlant}
+                        onChange={(e) => setSelectedPlant(e.target.value)}
+                        className="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all font-medium cursor-pointer"
+                    >
+                        <option value="auto">🌟 Auto-Detect (Let AI Decide)</option>
+                        <option value="tomato">🍅 Tomato</option>
+                        <option value="potato">🥔 Potato</option>
+                    </select>
+                </div>
+                {/* -------------------------------------- */}
                 {!preview ? (
                     <div 
                     className="border-3 border-dashed border-green-200 rounded-2xl h-64 flex flex-col items-center justify-center bg-green-50/50 cursor-pointer hover:bg-green-50 transition-colors group"

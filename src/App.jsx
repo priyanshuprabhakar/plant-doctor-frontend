@@ -539,12 +539,12 @@ export default function PlantDiseaseUI() {
       {/* Navigation */}
       <nav className="bg-gray-900 shadow-md border-b border-gray-800 sticky top-0 z-50">
           <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-              <div 
-                className="flex items-center gap-2 cursor-pointer" 
+             <div 
+                className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity" 
                 onClick={() => setCurrentTab('home')}
               >
-                  <Leaf className="w-6 h-6 text-green-500" />
-                  <span className="font-bold text-xl text-white hidden sm:block">Plant Doctor AI</span>
+                  <Leaf className="w-8 h-8 md:w-10 md:h-10 text-green-500" />
+                  <span className="font-extrabold text-2xl md:text-3xl text-white hidden sm:block tracking-tight">Plant Doctor AI</span>
               </div>
               
               <div className="flex items-center bg-gray-950 border border-gray-800 rounded-lg p-1">

@@ -840,7 +840,7 @@ export default function PlantDiseaseUI() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
-            © {new Date().getFullYear()} Plant Doctor AI. All rights reserved.
+            © {new Date().getFullYear()} Plant Doctor AI.
           </div>
         </div>
       </footer>
